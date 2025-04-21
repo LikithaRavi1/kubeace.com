@@ -1,0 +1,59 @@
+import config from "@/config/config.json";
+// import ImageFallback from "@/helpers/ImageFallback";
+import dateFormat from "@/lib/utils/dateFormat";
+import { humanize, plainify, slugify } from "@/lib/utils/textConverter";
+import { Post } from "@/types";
+import Link from "next/link";
+import { FaRegFolder, FaRegUserCircle } from "react-icons/fa/index.js";
+
+const BlogCard = ({ data }: { data: Post }) => {
+  const { summary_length, blog_folder } = config.settings;
+  const { title, image, author, categories, date } = data.frontmatter;
+  return (
+    <div className="flex flex-col bg-body dark:bg-darkmode-body group relative overflow-hidden rounded-sm bg-white shadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark">
+        {image && (
+          <div className="h-full shadow-lg shadow-two shadow-gray-dark rounded-sm border border-1">
+            <img
+              className="rounded-sm min-h-[200px]"
+              src={image}
+              alt={title}
+            />
+          </div>
+        )}
+      <div className="p-6 sm:p-8 md:px-6 md:py-8 lg:p-8 xl:px-5 xl:py-8 2xl:p-8">
+      <h4 className="mb-3 min-h-16 hover:underline">
+        <Link href={`/${blog_folder}/${data.slug}`}>{title}</Link>
+      </h4>
+      <ul className="mb-4 h-14 pb-4">
+        <li className="mr-4 inline-block">
+          <Link href={`/authors/${slugify(author)}`}>
+            <FaRegUserCircle className={"-mt-1 mr-2 inline-block"} />
+            {humanize(author)}
+          </Link>
+        </li>
+        <li className="mr-4 inline-block">
+          <FaRegFolder className={"-mt-1 mr-2 inline-block"} />
+          {categories?.map((category: string, index: number) => (
+            <Link key={index} href={`/categories/${slugify(category)}`}>
+              {humanize(category)}
+              {index !== categories.length - 1 && ", "}
+            </Link>
+          ))}
+        </li>
+        {date && <li className="inline-block">{dateFormat(date)}</li>}
+      </ul>
+      <p className="mb-6 h-30">
+        {plainify(data.content!.slice(0, Number(summary_length)))}{'...'}
+      </p>
+      {/* <Link
+        className="btn btn-outline-primary btn-sm"
+        href={`/${blog_folder}/${data.slug}`}
+      >
+        read more
+      </Link> */}
+      </div>
+    </div>
+  );
+};
+
+export default BlogCard;

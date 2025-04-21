@@ -1,0 +1,11 @@
+# robots.txt for kubeace.com
+User-agent: *
+Allow: /
+
+# Disallow admin and development paths
+Disallow: /admin/
+Disallow: /dev/
+Disallow: /test/
+
+# Sitemaps
+Sitemap: https://kubeace.com/sitemap.xml

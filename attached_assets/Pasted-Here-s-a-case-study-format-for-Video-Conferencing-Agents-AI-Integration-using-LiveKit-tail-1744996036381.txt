@@ -1,0 +1,104 @@
+Here's a case study format for **"Video Conferencing Agents & AI Integration using LiveKit"** — tailored for a platform that integrates human agents, AI automation, and real-time video/audio communication. This would be especially relevant for industries like telehealth, edtech, customer support, or virtual sales.
+
+---
+
+## 📘 **Case Study: Video Conferencing Agents & AI Integration Using LiveKit**
+
+### 🏢 **Client Background**
+A rapidly growing telehealth startup that connects patients with health professionals across regions. They wanted to scale to thousands of consultations per day while integrating AI-driven assistance and automating triage tasks using real-time video conferencing.
+
+---
+
+### 🎯 **Objective**
+To build a scalable and interactive video conferencing platform that:
+- Connects users to live agents (health professionals).
+- Integrates AI for pre-consultation triage and live transcription.
+- Handles 5000+ concurrent sessions and 450,000 sessions per day.
+- Supports dynamic agent routing, session recording, and metrics tracking.
+
+---
+
+### 🛠️ **Technology Stack**
+- **Video Conferencing:** [LiveKit](https://livekit.io/) (self-hosted)
+- **Frontend:** React.js + TailwindCSS
+- **Backend:** Node.js + Express
+- **AI Integration:** OpenAI / Vertex AI for NLP & Triage
+- **Voice-to-Text:** Whisper (OpenAI) or Deepgram
+- **Authentication:** Auth0 / Firebase Auth
+- **Monitoring:** Grafana + Prometheus + Loki
+- **Infrastructure:** Kubernetes (EKS), Redis, PostgreSQL
+- **CI/CD:** GitHub Actions + ArgoCD
+
+---
+
+### ⚙️ **Architecture Overview**
+
+#### 🔹 1. **User Onboarding & Agent Matching**
+- Users initiate a request via frontend.
+- Backend triggers matchmaking to assign the right agent based on availability, specialization, and load.
+
+#### 🔹 2. **AI-Powered Pre-Session**
+- Before connecting to an agent, an **AI triage bot** gathers initial info.
+- AI summarizes symptoms or queries, which are then passed to the agent for context.
+
+#### 🔹 3. **LiveKit Room Initialization**
+- A new LiveKit room is created dynamically.
+- Both agent and user join via unique tokens.
+- Optional: AI assistant joins silently to transcribe and summarize in real-time.
+
+#### 🔹 4. **Session Features**
+- Real-time **transcription and summarization**.
+- **Recording & compliance logging**.
+- On-screen tools for drawing, file sharing, and chat.
+- AI nudges for the agent (“Suggest asking about past medication,” etc.)
+
+#### 🔹 5. **Post-Session Automation**
+- AI generates a session summary.
+- Stores data securely in a HIPAA-compliant database.
+- Feedback forms and follow-up scheduling.
+
+---
+
+### 🚀 **Key Achievements**
+| Metric | Before | After |
+|--------|--------|-------|
+| Concurrent Sessions | 500 | 5,000+ |
+| Daily Sessions | ~25,000 | 450,000 |
+| Avg. Wait Time | ~4 mins | < 30 seconds |
+| Agent Efficiency | — | +37% via AI pre-triage |
+| Session Logs/Transcripts | Manual | Fully Automated |
+
+---
+
+### 🧠 **AI Integration Highlights**
+- **Pre-session triage** reduced agent time by ~40%.
+- **Live transcription** increased accuracy for records.
+- **AI co-pilot for agents** suggested follow-up questions in real-time.
+- **Smart session summarizer** helped with legal documentation.
+
+---
+
+### 📉 **Challenges & Solutions**
+| Challenge | Solution |
+|----------|----------|
+| Session scale-out under heavy load | Auto-scaling LiveKit nodes using Karpenter on EKS |
+| AI delays during triage | Batched processing and caching frequent responses |
+| Handling low-bandwidth users | Dynamic video quality adjustment using LiveKit's simulcast |
+| Session routing latency | Redis-based distributed queue for agent availability |
+
+---
+
+### ✅ **Outcome**
+The platform was able to handle high-volume video calls with minimal latency, reduced operational costs through AI automation, and significantly enhanced the end-user experience with contextual, real-time AI support.
+
+---
+
+### 🔮 **Next Steps**
+- Multilingual AI support
+- SIP integration for PSTN calls
+- Predictive agent routing using ML
+- Auto-summarized EHR entries post-session
+
+---
+
+Would you like this case study converted into a **slide deck**, **executive summary**, or **proposal format**?

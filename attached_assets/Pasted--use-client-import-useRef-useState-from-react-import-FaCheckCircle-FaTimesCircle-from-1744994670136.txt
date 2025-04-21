@@ -1,0 +1,100 @@
+"use client";
+import { useRef, useState } from 'react';
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa/index.js"; 
+
+const emailSuccessMessage = 'Your email has been sent successfully';
+const emailErrorMessage = 'Please attempt your submission again.';
+const formSumbitUrl = 'https://oxujr9rl88.execute-api.us-east-1.amazonaws.com/default/kubeace-email-service';
+
+const ContactForm = () => {
+    const formRef = useRef(null);
+    const [formState, setFormState] = useState("init"); 
+
+    const handleSubmit = async (event: any) => {
+        setFormState('init');
+        event.preventDefault(); 
+        const formData = new FormData(event.target); 
+        const formDataJson:any = {}
+        for (const pair of formData.entries()) {
+          formDataJson[pair[0]] = pair[1];
+        }
+        try {
+          setFormState('loading');
+          const response = await fetch(formSumbitUrl, {
+            method: 'POST',
+            body: JSON.stringify(formDataJson),
+          });
+          if (response.ok) {
+            event.target.reset();
+            setFormState("success");
+            console.log('Form data submitted successfully');
+          } else {
+            setFormState("failed");
+            console.error('Failed to submit form data');
+          }
+        } catch (error) {
+          setFormState("failed");
+          console.error('Error submitting form data:', error);
+        }
+
+      };
+    
+    return (
+      <section className="section-sm dark:bg-[#2253a278] py-4">
+        <div className="container">
+          <div className="row">
+            <div className="mx-auto md:col-10 lg:col-6">
+              <form onSubmit={handleSubmit} ref={formRef}>
+                <div className="mb-6">
+                  <input
+                    id="name"
+                    name="name"
+                    className="form-input"
+                    placeholder="Full Name"
+                    type="text"
+                    required  // Making full name mandatory
+                  />
+                </div>
+                <div className="mb-6">
+                  <input
+                    id="email"
+                    name="email"
+                    className="form-input"
+                    placeholder="Working Mail"
+                    required  // Making email mandatory
+                    type="email"
+                  />
+                </div>
+                <div className="mb-6">
+                  <input
+                    id="phone"
+                    name="phone"
+                    className="form-input"
+                    placeholder="Enter your phone number (including country code)"
+                    type="tel"
+                  />
+                </div>
+                <div className="mb-6">
+                  <textarea
+                    id="message"
+                    name="message"
+                    className="form-input"
+                    placeholder="Anything else ?"
+                    rows={2}
+                    required  // Making message box mandatory
+                  ></textarea>
+                </div>
+                <button type="submit" className="btn btn-primary disabled:bg-gray-500" disabled={formState === 'loading'}>
+                  Submit
+                </button>
+                {formState === 'success' && <span className='ml-10 border border-1 border-green-400 rounded-lg p-2'><FaCheckCircle className={"-mt-1 text-green-400 mr-2 inline-block"} /> {emailSuccessMessage}</span>}
+                {formState === 'failed' && <span className='ml-10 border border-1 border-red-400 rounded-lg p-2'><FaTimesCircle className={"-mt-1 text-red-400 mr-2 inline-block"} />{emailErrorMessage}</span>}
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+}
+
+export default ContactForm;
