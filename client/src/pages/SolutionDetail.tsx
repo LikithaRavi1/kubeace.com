@@ -99,7 +99,7 @@ const SolutionDetail: React.FC = () => {
                 {solution.slug === 'video-conferencing-agents' && (
                   <div className="grid grid-cols-2 gap-4 mt-4">
                     <img 
-                      src="/images/video-conferencing-1.jpg" 
+                      src="https://plus.unsplash.com/premium_vector-1704297953235-1d4141e2c264?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YWl8ZW58MHx8MHx8fDA%3D" 
                       alt="Video conferencing in action" 
                       className="w-full h-32 md:h-40 object-cover rounded-lg shadow-md" 
                       onError={(e) => { 
@@ -108,7 +108,7 @@ const SolutionDetail: React.FC = () => {
                       }}
                     />
                     <img 
-                      src="/images/video-conferencing-2.jpg" 
+                      src="https://cdn.prod.website-files.com/61a05ff14c09ecacc06eec05/66e8522cbe3d357b8434826a_ai-agents.jpg" 
                       alt="AI transcription example" 
                       className="w-full h-32 md:h-40 object-cover rounded-lg shadow-md"
                       onError={(e) => { 

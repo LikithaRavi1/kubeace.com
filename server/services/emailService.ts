@@ -1,5 +1,4 @@
-// Email service using SMTP via nodemailer
-import nodemailer from "nodemailer";
+import axios from 'axios';
 
 interface EmailData {
   name: string;
@@ -8,27 +7,12 @@ interface EmailData {
   message: string;
 }
 
-// Get SMTP configuration from environment variables
-const smtpConfig = {
-  host: process.env.SMTP_SERVER || "smtp.zeptomail.in",
-  port: parseInt(process.env.SMTP_PORT || "587"),
-  secure: process.env.SMTP_PORT === "465", // true for 465, false for other ports
-  auth: {
-    user: process.env.SMTP_USERNAME || "",
-    pass: process.env.SMTP_PASSWORD || "",
-  },
-};
+// Configure API settings
+const API_URL = 'https://api.zeptomail.in/v1.1/email';
+const token = process.env.ZEPTO_API_TOKEN || "Zoho-enczapikey PHtE6r0MFL/tj2Yo9xcBtPW+QJWiMt4s+O1kJQkTttpBW/cAG01S/9ovkWe3qh97U/JDQPOZwI88temV5uqHLGzqYWhMVWqyqK3sx/VYSPOZsbq6x00Vs14bcETbU4bse9Nv0SLVutzcNA==";
 
-// Create a nodemailer transporter
-const transporter = nodemailer.createTransport(smtpConfig);
-
-/**
- * Function to send emails from the contact form using SMTP
- * @param emailData The contact form data
- * @returns Promise with success or error message
- */
 export async function sendContactEmail(
-  emailData: EmailData,
+  emailData: EmailData
 ): Promise<{ success: boolean; message: string }> {
   const { name, email, company, message } = emailData;
 
@@ -49,7 +33,7 @@ export async function sendContactEmail(
   }
 
   try {
-    // Prepare the email message
+    // Prepare the email content
     const emailContent = `
       <h2>New Contact Form Submission</h2>
       <p><strong>Name:</strong> ${name}</p>
@@ -59,48 +43,43 @@ export async function sendContactEmail(
       <p style="white-space: pre-line;">${message}</p>
     `;
 
-    // Hard code the recipient to make sure it works
     const TO_EMAIL = "info@kubeace.com";
 
-    // Set up email options
-    const mailOptions = {
-      from: process.env.EMAIL_FROM || "noreply@kubeace.com",
-      to: TO_EMAIL, // Explicit recipient email
-      replyTo: email,
+    // Set up email payload matching the curl format
+    const payload = {
+      from: {
+        address: "noreply@kubeace.com"
+      },
+      to: [{
+        email_address: {
+          address: TO_EMAIL,
+          name: "KubeAce"
+        }
+      }],
       subject: `New Contact Request from ${name}`,
-      html: emailContent,
-      text: `
-        New Contact Form Submission
-        ---------------------------
-        Name: ${name}
-        Email: ${email}
-        ${company ? `Company: ${company}\n` : ""}
-        Message: ${message}
-      `,
+      htmlbody: emailContent
     };
 
-    // Log that we're sending an email with complete information
-    console.log("Sending email via SMTP with options:", JSON.stringify({
-      from: mailOptions.from,
-      to: mailOptions.to,
-      subject: mailOptions.subject,
-      replyTo: mailOptions.replyTo
-    }));
+    // Make the API request using axios
+    const response = await axios.post(API_URL, payload, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+    });
 
-    // Send the email
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully:", info.messageId, "To:", mailOptions.to);
+    console.log("Email sent successfully:", response.data);
 
     return {
       success: true,
-      message: "Email sent successfully",
+      message: "Email sent successfully"
     };
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error("Error sending email:", error?.response?.data || error);
     return {
       success: false,
-      message:
-        error instanceof Error ? error.message : "Unknown error sending email",
+      message: error instanceof Error ? error.message : "Unknown error sending email"
     };
   }
 }

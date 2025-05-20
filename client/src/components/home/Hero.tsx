@@ -44,11 +44,11 @@ const Hero: React.FC = () => {
             <div className="relative">
               <div className="grid grid-cols-2 gap-6">
                 <div className="flex flex-col space-y-6">
-                  <Link href="/services/kubernetes-managed-services">
-                    <div className="bg-gradient-to-br from-blue-800 to-blue-700 p-6 rounded-xl shadow-lg transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
-                      <Database className="h-8 w-8 text-blue-200 mb-4" />
-                      <h3 className="text-xl font-semibold text-white">Kubernetes</h3>
-                      <p className="text-blue-200 mt-2">Enterprise-grade Kubernetes management</p>
+                  <Link href="/services/end-to-end-devops">
+                    <div className="bg-gradient-to-br from-blue-800 to-indigo-800 p-6 rounded-xl shadow-lg transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
+                      <Server className="h-8 w-8 text-blue-200 mb-4" />
+                      <h3 className="text-xl font-semibold text-white">DevOps</h3>
+                      <p className="text-blue-200 mt-2">End-to-end DevOps transformation</p>
                     </div>
                   </Link>
                   <Link href="/services/livekit-consulting">
@@ -59,19 +59,19 @@ const Hero: React.FC = () => {
                     </div>
                   </Link>
                 </div>
-                <div className="flex flex-col space-y-6 mt-10">
+                <div className="flex flex-col space-y-6">
+                  <Link href="/services/kubernetes-managed-services">
+                    <div className="bg-gradient-to-br from-blue-800 to-blue-700 p-6 rounded-xl shadow-lg transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
+                      <Database className="h-8 w-8 text-blue-200 mb-4" />
+                      <h3 className="text-xl font-semibold text-white">Kubernetes</h3>
+                      <p className="text-blue-200 mt-2">Enterprise-grade Kubernetes management</p>
+                    </div>
+                  </Link>
                   <Link href="/services/cloud-native-consulting">
                     <div className="bg-gradient-to-br from-violet-800 to-violet-700 p-6 rounded-xl shadow-lg transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
                       <Cloud className="h-8 w-8 text-violet-200 mb-4" />
                       <h3 className="text-xl font-semibold text-white">Cloud Native</h3>
                       <p className="text-violet-200 mt-2">Harness the full potential of cloud platforms</p>
-                    </div>
-                  </Link>
-                  <Link href="/services/end-to-end-devops">
-                    <div className="bg-gradient-to-br from-blue-800 to-indigo-800 p-6 rounded-xl shadow-lg transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
-                      <Server className="h-8 w-8 text-blue-200 mb-4" />
-                      <h3 className="text-xl font-semibold text-white">DevOps</h3>
-                      <p className="text-blue-200 mt-2">End-to-end DevOps transformation</p>
                     </div>
                   </Link>
                 </div>

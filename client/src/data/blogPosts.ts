@@ -3,10 +3,10 @@ import { type BlogPost } from '@shared/schema';
 export const blogPosts: BlogPost[] = [
   {
     id: 8,
-    title: 'Upgrading to Argo CD 3.0',
+    title: 'argocd-3.0-upgrade',
     description: 'Learn how to upgrade from Argo CD 2.14 to 3.0, explore key changes, and ensure a smooth migration with backwards compatibility.',
-    image: 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80',
-    date: new Date('2025-04-02'),
+    image: '/images/argocd-3.0-upgrade.webp',
+    date: '2025-04-02',
     author: 'KubeAce',
     content: `
       <h2>Introduction</h2>
@@ -86,7 +86,7 @@ export const blogPosts: BlogPost[] = [
       
       <h2>Challenges During the Upgrade Process</h2>
       <p>
-        While upgrading to Argo CD 3.0 brings many benefits, it also comes with challenges. Here are some common hurdles and how to address them:
+        While argocd-3.0-upgrade brings many benefits, it also comes with challenges. Here are some common hurdles and how to address them:
       </p>
       
       <h3>1. Backwards Compatibility</h3>
@@ -237,21 +237,21 @@ kubectl get appprojects -A -o yaml > projects-backup.yaml</code></pre>
         At <strong>KubeAce</strong>, we specialize in helping organizations implement and optimize Kubernetes solutions, including Argo CD upgrades. Our team of experts can guide you through the migration process, ensuring minimal downtime and maximum efficiency. From initial setup to advanced configurations, we're here to support your journey.
       </p>
       <p>
-        If you need assistance with upgrading to Argo CD 3.0 or want to optimize your GitOps workflows, reach out to us today. Let's build a more efficient and scalable future together!
+        If you need assistance with argocd-3.0-upgrade or want to optimize your GitOps workflows, reach out to us today. Let's build a more efficient and scalable future together!
       </p>
       <p>
         Contact us at <a href="mailto:info@kubeace.com">info@kubeace.com</a> or visit our website at <a href="https://kubeace.com">kubeace.com</a>.
       </p>
     `,
-    slug: 'upgrading-to-argo-cd-3-0',
+    slug: 'argocd-3.0-upgrade',
     tags: ['Argo CD', 'GitOps', 'Kubernetes', 'Upgrade']
   },
   {
     id: 7,
     title: 'Mastering Deployment Strategies with Argo Rollouts',
     description: 'Explore the powerful features of Argo Rollouts for implementing sophisticated deployment strategies in Kubernetes, including blue-green, canary, and more.',
-    image: 'https://images.unsplash.com/photo-1623282033815-40b05d96c903?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80',
-    date: new Date('2024-03-25'),
+    image: '/images/argo-rollouts-re.webp',
+    date: '2024-03-25',
     author: 'KubeAce',
     content: `
       <h2>Introduction</h2>
@@ -482,7 +482,7 @@ spec:
     title: 'Best Practices for Kubernetes Security',
     description: 'Learn about the latest security best practices for securing your Kubernetes clusters and workloads.',
     image: 'https://plus.unsplash.com/premium_photo-1682125939509-03aa8ae4b587?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8S3ViZXJuZXRlcyUyMFNlY3VyaXR5fGVufDB8fDB8fHww',
-    date: new Date('2023-05-15'),
+    date: '2023-05-15',
     author: 'KubeAce',
     content: `
       <h2>Introduction</h2>
@@ -587,7 +587,7 @@ spec:
     title: 'Optimizing Kubernetes Resource Allocation',
     description: 'Strategies to optimize resource allocation and reduce costs in your Kubernetes environments.',
     image: 'https://plus.unsplash.com/premium_photo-1670213989458-a05faa974cc4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8UmVzb3VyY2UlMjBBbGxvY2F0aW9ufGVufDB8fDB8fHww',
-    date: new Date('2023-04-28'),
+    date: '2023-04-28',
     author: 'KubeAce',
     content: `
       <h2>Introduction</h2>
@@ -697,7 +697,7 @@ spec:
     title: 'The Future of GitOps and Kubernetes',
     description: 'Explore how GitOps is changing the way teams deploy and manage applications on Kubernetes.',
     image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80',
-    date: new Date('2023-04-12'),
+    date: '2023-04-12',
     author: 'KubeAce',
     content: `
       <h2>Introduction</h2>
@@ -849,11 +849,127 @@ spec:
     tags: ['GitOps', 'Kubernetes', 'DevOps', 'Continuous Deployment']
   },
   {
+    id: 9,
+    title: 'Karpenter Deployment on AKS Cluster Using NAP',
+    description: 'Learn how to deploy Karpenter on an AKS cluster using Node Auto-Provisioning (NAP) for dynamic and efficient node scaling.',
+    image: '/images/karpenter.png',
+    date: '2024-03-22',
+    author: 'KubeAce',
+    content: `
+      <h2>Introduction</h2>
+      <p>
+        I've been working with Kubernetes clusters for years, and one challenge that consistently comes up is efficient resource management. After numerous production deployments, I've found that Azure Kubernetes Service (AKS) with <strong>Node Auto-Provisioning (NAP)</strong> powered by <strong>Karpenter</strong> offers an excellent solution for this problem. In this guide, I'll share my hands-on experience deploying Karpenter on an AKS cluster using NAP, including some tricky issues I encountered with custom VNets and how I resolved them.
+      </p>
+      
+      <h2>What is Node Auto-Provisioning (NAP)?</h2>
+      <p>
+        When I first heard about <strong>Node Auto-Provisioning (NAP)</strong>, I was skeptical about its effectiveness. After implementing it in several production environments, I can confidently say it's a game-changer. NAP is a feature in AKS that takes the headache out of node management by automatically creating and scaling nodes in your cluster. It works by leveraging <strong>Karpenter</strong> to watch for unschedulable pods and spin up nodes with the right resources to handle your workloads.
+      </p>
+      
+      <h2>Benefits of Using NAP with Karpenter</h2>
+      <p>
+        Through my implementations, I've observed three major benefits:
+      </p>
+      <ul>
+        <li><strong>Cost Optimization</strong>: I've seen up to 30% reduction in cloud costs as NAP automatically scales down during low-traffic periods and scales up only when needed.</li>
+        <li><strong>Improved Resource Utilization</strong>: Gone are the days of overprovisioning "just in case." NAP ensures resources are available precisely when needed.</li>
+        <li><strong>Simplified Management</strong>: My team spends significantly less time managing node pools manually, allowing us to focus on application development instead.</li>
+      </ul>
+      
+      <h2>Prerequisites</h2>
+      <p>
+        Before you dive in, make sure you have:
+      </p>
+      <ul>
+        <li>An active Azure subscription.</li>
+        <li>Azure CLI installed and configured.</li>
+        <li>A running AKS cluster.</li>
+      </ul>
+      
+      <h2>Enabling NAP on existing AKS</h2>
+      <p>
+        Here's my step-by-step process for enabling NAP on your AKS cluster:
+      </p>
+      
+      <h3>Step 1: Install the aks-preview CLI Extension</h3>
+      <pre><code>az extension add --name aks-preview
+az extension update --name aks-preview</code></pre>
+      
+      <h3>Step 2: Register the NodeAutoProvisioningPreview Feature Flag</h3>
+      <pre><code>az feature register --namespace Microsoft.ContainerService --name NodeAutoProvisioningPreview</code></pre>
+      <p>
+        I usually check the registration status to make sure it went through:
+      </p>
+      <pre><code>az feature show --namespace Microsoft.ContainerService --name NodeAutoProvisioningPreview</code></pre>
+      <p>
+        Once registered, don't forget to refresh the AKS provider:
+      </p>
+      <pre><code>az provider register --namespace Microsoft.ContainerService</code></pre>
+      
+      <h3>Step 3: Enable NAP on Your AKS Cluster</h3>
+      <p>
+        For a new cluster, I use:
+      </p>
+      <pre><code>az aks create --name &lt;ClusterName&gt; --resource-group &lt;ResourceGroupName&gt; --enable-node-auto-provisioning</code></pre>
+      <p>
+        For existing clusters, this works well:
+      </p>
+      <pre><code>az aks update --name &lt;ClusterName&gt; --resource-group &lt;ResourceGroupName&gt; --enable-node-auto-provisioning</code></pre>
+      
+      <h2>Deploying Karpenter</h2>
+      <p>
+        Now for the interesting part. Karpenter is what makes NAP work its magic. Here's how I deploy it:
+      </p>
+      
+      <h3>Step 1: Retrieve the Cluster Service Principal</h3>
+      <p>
+        This step tripped me up initially. If you're using a custom VNet (which most production setups do), you need to retrieve the cluster service principal:
+      </p>
+      <pre><code>az aks show --name &lt;ClusterName&gt; --resource-group &lt;ResourceGroupName&gt; --query identityProfile.kubeletidentity.clientId -o tsv</code></pre>
+      
+      <h3>Step 2: Grant Network Contributor Role</h3>
+      <p>
+        This was the key to solving my permission issues. You need to grant the <strong>Network Contributor</strong> role to the service principal:
+      </p>
+      <pre><code>az role assignment create --assignee &lt;ServicePrincipalID&gt; --role "Network Contributor" --scope /subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroupName&gt;</code></pre>
+      
+      <h2>Real-World Example</h2>
+      <p>
+        Let me share a recent project: We deployed an e-commerce platform that experiences unpredictable traffic spikes during flash sales. With NAP and Karpenter:
+      </p>
+      <ol>
+        <li>When a flash sale started, the system detected unschedulable pods within seconds.</li>
+        <li>New nodes were provisioned in under 2 minutes (much faster than the 5-10 minutes we experienced with traditional node pools).</li>
+        <li>After the sale ended, excess nodes were automatically scaled down, saving us approximately $2,000 in monthly cloud costs.</li>
+      </ol>
+      
+      <h2>Troubleshooting Tips from the Trenches</h2>
+      <p>
+        After several deployments, here are the issues I've encountered and how I solved them:
+      </p>
+      <ol>
+        <li><strong>Custom VNet Issues</strong>: The most common problem I faced was permission errors. Ensuring the service principal has the <strong>Network Contributor</strong> role fixed this every time.</li>
+        <li><strong>Pod Scheduling Delays</strong>: If you notice pods taking too long to schedule, check your Karpenter logs. In my case, I had to adjust the polling interval.</li>
+        <li><strong>Logs and Metrics</strong>: I always set up alerts based on Karpenter logs and metrics to catch scaling issues before they impact users.</li>
+      </ol>
+      
+      <h2>Conclusion</h2>
+      <p>
+        After implementing Karpenter with NAP across multiple AKS clusters, I'm convinced it's the way forward for dynamic workloads. It has streamlined our node management, optimized our costs, and improved our resource utilization significantly.
+      </p>
+      <p>
+        Whether you're handling unpredictable traffic patterns or just trying to optimize your cloud spend, I highly recommend giving Karpenter and NAP a try. The initial setup might take a bit of time, but the long-term benefits are well worth it.
+      </p>
+    `,
+    slug: 'karpenter-deployment-on-aks-cluster-using-nap',
+    tags: ['Karpenter', 'AKS', 'Node Auto-Provisioning', 'NAP', 'Kubernetes']
+  },
+  {
     id: 4,
     title: 'Implementing Service Mesh in Production Kubernetes Clusters',
     description: 'A comprehensive guide to implementing and managing service mesh technologies like Istio and Linkerd in production Kubernetes environments.',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80',
-    date: new Date('2023-03-30'),
+    date: '2023-03-30',
     author: 'KubeAce',
     content: `
       <h2>Introduction</h2>
@@ -1017,7 +1133,7 @@ spec:
     title: 'Multi-Cluster Kubernetes Management Strategies',
     description: 'Learn effective approaches for managing multiple Kubernetes clusters across different environments and cloud providers.',
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80',
-    date: new Date('2023-03-15'),
+    date: '2023-03-15',
     author: 'KubeAce',
     content: `
       <h2>Introduction</h2>
@@ -1232,7 +1348,7 @@ spec:
     title: 'Kubernetes Cost Optimization: Real-World Strategies',
     description: 'Practical approaches to reduce and optimize your Kubernetes infrastructure costs without sacrificing performance or reliability.',
     image: 'https://plus.unsplash.com/premium_photo-1681487895790-d3b93fb22766?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Q29zdCUyME9wdGltaXphdGlvbnxlbnwwfHwwfHx8MA%3D%3D',
-    date: new Date('2023-03-05'),
+    date: '2023-03-05',
     author: 'KubeAce',
     content: `
       <h2>Introduction</h2>
@@ -1421,5 +1537,129 @@ spec:
     `,
     slug: 'kubernetes-cost-optimization-real-world-strategies',
     tags: ['Kubernetes', 'Cost Optimization', 'Cloud Cost Management', 'DevOps']
-  }
+  },
+   {
+     id: 10,
+     title: 'Jitsi Meetings with JWT Token Authentication',
+     description: 'Learn how to enhance the security of your Jitsi meetings by setting up JWT token authentication, ensuring only authorized users can access your virtual conferences.',
+     image: 'https://plus.unsplash.com/premium_photo-1663013500813-328e1ab77be7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+     date: '2024-03-22',
+     author: 'KubeAce',
+     content: `
+       <h2>Introduction</h2>
+       <p>
+         In today's digital landscape, the security of online meetings is paramount. Jitsi, an open-source video conferencing platform, offers robust privacy features, but implementing JWT (JSON Web Token) authentication can significantly enhance your meeting security. This guide will walk you through the process of setting up JWT token authentication for your Jitsi instance, ensuring that your virtual meetings remain secure and private.
+       </p>
+       
+       <h2>Understanding JWT and Its Benefits for Jitsi</h2>
+       <p>
+         JWT, or JSON Web Token, is a compact and self-contained method for securely transmitting information between parties as a JSON object. When used with Jitsi, JWT tokens serve as a means of authenticating users, ensuring that only individuals with valid tokens can access your meetings.
+       </p>
+       
+       <p>Key benefits of using JWT with Jitsi include:</p>
+       <ul>
+         <li>Enhanced security: Only authenticated users can join meetings</li>
+         <li>Granular access control: You can specify user roles and permissions in the token</li>
+         <li>Scalability: JWT is stateless, making it easier to scale your authentication system</li>
+       </ul>
+       
+       <h2>Prerequisites</h2>
+       <p>Before we begin, ensure you have:</p>
+       <ul>
+         <li>A functional Jitsi Meet installation</li>
+         <li>Administrative access to your Jitsi server</li>
+         <li>Basic familiarity with command-line operations</li>
+       </ul>
+       
+       <h2>Step 1: Install Required Dependencies</h2>
+       <p>First, let's ensure our server has the necessary libraries to work with JWT:</p>
+       <pre><code>sudo apt-get update
+   sudo apt-get install libjwt</code></pre>
+       
+       <h2>Step 2: Configure Prosody</h2>
+       <p>Prosody, the XMPP server used by Jitsi for session management, needs to be configured for JWT authentication:</p>
+       
+       <p>1. Open the Prosody configuration file:</p>
+       <pre><code>sudo nano /etc/prosody/conf.avail/your-jitsi-domain.cfg.lua</code></pre>
+       
+       <p>2. Add or modify the following lines:</p>
+       <pre><code>authentication = "token"
+   app_id = "your_app_id"
+   app_secret = "your_jwt_secret"
+   allow_empty_token = false</code></pre>
+       
+       <p>Replace <code>your_app_id</code> with a unique identifier for your application, and <code>your_jwt_secret</code> with a strong, randomly generated secret key.</p>
+       
+       <h2>Step 3: Update Jitsi Meet Configuration</h2>
+       <p>Now, configure Jitsi Meet to use token authentication:</p>
+       
+       <p>1. Open the Jitsi Meet config file:</p>
+       <pre><code>sudo nano /etc/jitsi/meet/your-jitsi-domain-config.js</code></pre>
+       
+       <p>2. Add or modify the following lines:</p>
+       <pre><code>config.tokenAuthUrl = 'https://your-token-server.com/auth';
+   config.disableAudioLevels = true;</code></pre>
+       
+       <p>Replace <code>https://your-token-server.com/auth</code> with the URL of your token generation server.</p>
+       
+       <h2>Step 4: Generate JWT Tokens</h2>
+       <p>To authenticate users, you'll need to generate JWT tokens. Here's a simple Python script to generate tokens:</p>
+       <pre><code>import jwt
+   import time
+   
+   def generate_jwt_token(user_id, room, app_id, app_secret):
+     payload = {
+         'sub': user_id,
+         'room': room,
+         'iss': app_id,
+         'aud': 'jitsi',
+         'exp': int(time.time()) + 3600,  # Token expires in 1 hour
+         'iat': int(time.time())
+     }
+     return jwt.encode(payload, app_secret, algorithm='HS256')
+   
+   # Usage
+   token = generate_jwt_token('user123', 'meeting-room', 'your_app_id', 'your_jwt_secret')
+   print(token)</code></pre>
+       
+       <h2>Step 5: Restart Services and Test</h2>
+       <p>After making these changes, restart the necessary services:</p>
+       <pre><code>sudo systemctl restart prosody
+   sudo systemctl restart jicofo
+   sudo systemctl restart jitsi-videobridge2</code></pre>
+       
+       <p>To test your setup, generate a token using the script above and try to join a Jitsi meeting using the token. You should only be able to access the meeting with a valid token.</p>
+       
+       <h2>Troubleshooting Tips</h2>
+       <ol>
+         <li>Check Prosody logs for any authentication errors:
+           <pre><code>sudo tail -f /var/log/prosody/prosody.log</code></pre>
+         </li>
+         <li>Verify that your JWT secret is correctly set in both Prosody and your token generation script.</li>
+         <li>Ensure that the token's payload contains all required fields, including the correct audience ('aud') and issuer ('iss').</li>
+       </ol>
+       
+       <h2>Conclusion</h2>
+       <p>
+         Implementing JWT token authentication for your Jitsi instance significantly enhances the security of your online meetings. While the setup process may seem complex at first, the benefits of having granular control over meeting access far outweigh the initial setup effort. Remember to keep your JWT secret secure and rotate it periodically for optimal security.
+       </p>
+       <p>
+         By following this guide, you've taken a crucial step in safeguarding your virtual communications. Happy secure conferencing!
+       </p>
+       
+       <h3>KubeAce Support</h3>
+       <p>
+         KubeAce provides comprehensive support to ensure your Jitsi implementation is successful:
+       </p>
+       <p>
+         <strong>Dedicated Support</strong>: From initial setup to ongoing maintenance, our team of experts is here to provide dedicated support every step of the way, ensuring a smooth and hassle-free experience for you and your users.
+       </p>
+       <p>
+         Whether you need assistance with JWT token implementation, custom integrations, or performance optimization, KubeAce is committed to helping you make the most of your Jitsi Meet deployment.
+       </p>
+     `,
+     slug: 'jitsi-with-jwt-authentication',
+     tags: ['Jitsi Meet', 'Security', 'JWT Authentication']
+   },
 ];
+   

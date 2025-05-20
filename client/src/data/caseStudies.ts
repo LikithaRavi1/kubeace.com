@@ -6,7 +6,7 @@ export const caseStudies: CaseStudy[] = [
     title: 'Video Conferencing Agents & AI Integration Using LiveKit',
     industry: 'Telehealth',
     description: 'Designed and built a scalable telehealth platform integrating human agents, AI automation, and real-time video communication to handle thousands of daily consultations.',
-    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80',
+    image: 'https://plus.unsplash.com/premium_vector-1732197718490-0f6daa32769f?q=80&w=3600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     tags: ['LiveKit', 'WebRTC', 'AI Integration', 'Telehealth', 'Kubernetes'],
     slug: 'video-conferencing-agents-ai-integration',
     content: `
@@ -233,7 +233,7 @@ export const caseStudies: CaseStudy[] = [
     title: 'SOC Audit Successful Completion for a Global Payment Interface',
     industry: 'Financial Services',
     description: 'Successfully guided a global payment interface provider through SOC 2 Type II compliance, implementing robust security controls and automated compliance monitoring for handling sensitive financial transactions.',
-    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80',
+    image: 'https://www.reflectiz.com/wp-content/uploads/2022/05/SOC-2.png',
     tags: ['Security', 'Compliance', 'SOC 2', 'Fintech', 'Payments'],
     slug: 'soc-audit-global-payment',
     content: `
@@ -490,6 +490,148 @@ export const caseStudies: CaseStudy[] = [
       <blockquote>
         "Moving from Lambda to GKE was a strategic decision that transformed our business. KubeAce's methodical approach to the migration gave us confidence throughout the process, and the results have exceeded our expectations. We now have a platform that gives us both the elasticity we need and the cost control our business requires."
         <cite>— CTO, E-commerce Platform</cite>
+      </blockquote>
+    `
+  },
+  {
+    id: 7,
+    title: 'Financial Services Company DevOps Transformation',
+    industry: 'Financial Services',
+    description: 'A comprehensive DevOps transformation for a major financial services company, resulting in 60% faster deployments and 40% reduced downtime through modern DevOps practices and automation.',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
+    tags: ['DevOps', 'CI/CD', 'Monitoring', 'Automation', 'Digital Transformation'],
+    slug: 'financial-services-devops-transformation',
+    content: `
+      <h2>Initial Challenges</h2>
+      <p>The financial services company faced critical operational inefficiencies that significantly impacted their business performance and customer satisfaction:</p>
+      
+      <ul>
+        <li><strong>Lengthy Deployment Cycles:</strong> Software releases took an average of 12 weeks from development to production</li>
+        <li><strong>Frequent Service Disruptions:</strong> Experiencing 8-12 hours of unplanned downtime monthly</li>
+        <li><strong>Siloed Teams:</strong> Development, QA, and Operations teams worked in isolation with minimal collaboration</li>
+        <li><strong>Manual Processes:</strong> 70% of testing and deployment tasks required manual intervention</li>
+        <li><strong>Compliance Concerns:</strong> Audit trails were difficult to maintain with inconsistent deployment processes</li>
+        <li><strong>Technical Debt:</strong> Legacy systems with minimal automation and documentation</li>
+        <li><strong>Low Morale:</strong> Team frustration due to firefighting and blame culture</li>
+      </ul>
+
+      <h2>Assessment and Strategy</h2>
+      <p>DevOps Consulting India conducted a comprehensive 4-week assessment that included:</p>
+      
+      <ul>
+        <li><strong>Technical Infrastructure Review:</strong> Evaluation of existing systems, tools, and processes</li>
+        <li><strong>Team Structure Analysis:</strong> Identifying communication gaps and organizational bottlenecks</li>
+        <li><strong>Value Stream Mapping:</strong> Documenting the flow of work from conception to delivery</li>
+        <li><strong>Maturity Assessment:</strong> Benchmarking current practices against industry standards</li>
+      </ul>
+
+      <h2>Implementation Phases</h2>
+      
+      <h3>Phase 1: Foundation (Months 1-2)</h3>
+      <ul>
+        <li>Established cross-functional DevOps teams</li>
+        <li>Conducted intensive training for 150+ staff</li>
+        <li>Implemented version control standardization</li>
+        <li>Developed initial CI/CD pipeline architecture</li>
+      </ul>
+
+      <h3>Phase 2: Automation Implementation (Months 3-5)</h3>
+      <ul>
+        <li><strong>Build Automation:</strong> Jenkins for continuous integration</li>
+        <li><strong>Infrastructure Automation:</strong> Terraform for infrastructure as code</li>
+        <li><strong>Configuration Management:</strong> Ansible for consistent environment configuration</li>
+        <li><strong>Containerization:</strong> Docker for application packaging</li>
+        <li><strong>Orchestration:</strong> Kubernetes for container management</li>
+        <li><strong>Monitoring:</strong> ELK stack for centralized logging</li>
+        <li><strong>Performance Tracking:</strong> Prometheus and Grafana for real-time metrics</li>
+      </ul>
+
+      <h3>Phase 3: Process Refinement (Months 6-8)</h3>
+      <ul>
+        <li>Introduced automated code quality gates using SonarQube</li>
+        <li>Implemented shift-left security practices</li>
+        <li>Established feature flag capabilities</li>
+        <li>Created self-service developer portals</li>
+        <li>Refined release management processes</li>
+      </ul>
+
+      <h3>Phase 4: Scaling and Optimization (Months 9-12)</h3>
+      <ul>
+        <li>Extended DevOps practices to 15 additional teams</li>
+        <li>Implemented advanced disaster recovery</li>
+        <li>Developed custom executive dashboards</li>
+        <li>Established Centers of Excellence</li>
+        <li>Created continuous improvement framework</li>
+      </ul>
+
+      <h2>Technical Challenges Overcome</h2>
+      <ul>
+        <li><strong>Legacy System Integration:</strong> Created API layers and abstraction mechanisms</li>
+        <li><strong>Database Change Management:</strong> Implemented automated database versioning</li>
+        <li><strong>Compliance Requirements:</strong> Built automated compliance checks</li>
+        <li><strong>Security Concerns:</strong> Integrated automated security scanning</li>
+        <li><strong>Complex Dependencies:</strong> Mapped and managed service dependencies</li>
+      </ul>
+
+      <h2>Results and Business Impact</h2>
+      
+      <h3>Quantitative Results</h3>
+      <table class="border-collapse border border-gray-300 w-full mb-8">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="border border-gray-300 p-3">Metric</th>
+            <th class="border border-gray-300 p-3">Before</th>
+            <th class="border border-gray-300 p-3">After</th>
+            <th class="border border-gray-300 p-3">Improvement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-gray-300 p-3">Deployment Frequency</td>
+            <td class="border border-gray-300 p-3">Monthly</td>
+            <td class="border border-gray-300 p-3">Daily</td>
+            <td class="border border-gray-300 p-3">30x increase</td>
+          </tr>
+          <tr>
+            <td class="border border-gray-300 p-3">Lead Time</td>
+            <td class="border border-gray-300 p-3">12 weeks</td>
+            <td class="border border-gray-300 p-3">3 days</td>
+            <td class="border border-gray-300 p-3">96% reduction</td>
+          </tr>
+          <tr>
+            <td class="border border-gray-300 p-3">Deployment Time</td>
+            <td class="border border-gray-300 p-3">8 hours</td>
+            <td class="border border-gray-300 p-3">3.2 hours</td>
+            <td class="border border-gray-300 p-3">60% reduction</td>
+          </tr>
+          <tr>
+            <td class="border border-gray-300 p-3">Change Failure Rate</td>
+            <td class="border border-gray-300 p-3">22%</td>
+            <td class="border border-gray-300 p-3">12%</td>
+            <td class="border border-gray-300 p-3">45% reduction</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Business Outcomes</h3>
+      <ul>
+        <li>28% increase in customer satisfaction scores</li>
+        <li>15% reduction in IT operational costs</li>
+        <li>4x faster response to market changes</li>
+        <li>22% increase in developer productivity</li>
+      </ul>
+
+      <h2>Key Lessons Learned</h2>
+      <ul>
+        <li><strong>Executive Sponsorship:</strong> Strong leadership support was crucial for cultural transformation</li>
+        <li><strong>Start Small:</strong> Beginning with a pilot team allowed for refinement before scaling</li>
+        <li><strong>Balanced Approach:</strong> Equal focus on people, process, and technology</li>
+        <li><strong>Continuous Learning:</strong> Regular training and knowledge sharing essential for success</li>
+      </ul>
+
+      <blockquote>
+        "The DevOps transformation has revolutionized our ability to deliver value to customers. We've not only improved our technical capabilities but fundamentally changed how our teams collaborate and innovate."
+        <cite>— CTO, Financial Services Company</cite>
       </blockquote>
     `
   }

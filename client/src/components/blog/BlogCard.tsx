@@ -12,7 +12,7 @@ interface BlogPost {
   title: string;
   description: string;
   image: string;
-  date: Date;
+  date: string; // Change type from Date to string
   author: string;
   content: string;
   slug: string;
@@ -33,12 +33,12 @@ const extractPlainText = (html: string, maxLength: number = 150): string => {
   // Return a truncated version for the summary
   return text.length > maxLength 
     ? `${text.substring(0, maxLength)}...` 
-    : text;
+    : text;``
 };
 
 // Helper to format date
-const formatDate = (date: Date): string => {
-  return format(new Date(date), 'MMMM d, yyyy');
+const formatDate = (dateString: string): string => {
+  return format(new Date(dateString), 'MMMM d, yyyy');
 };
 
 const BlogCard: React.FC<BlogCardProps> = ({ post }) => {

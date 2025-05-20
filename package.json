@@ -5,9 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsx server/index.ts",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "cd client && vite build",
-    "build:server": "tsc -p server/tsconfig.json",
+    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc",
     "db:push": "drizzle-kit push"
@@ -50,6 +48,7 @@
     "@types/dompurify": "^3.0.5",
     "@types/nodemailer": "^6.4.17",
     "@types/react-helmet": "^6.1.11",
+    "axios": "^1.9.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -72,6 +71,7 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "react": "^18.3.1",
+    "react-chatbot-kit": "^2.2.2",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
@@ -85,6 +85,7 @@
     "vaul": "^1.1.2",
     "wouter": "^3.3.5",
     "ws": "^8.18.0",
+    "zeptomail": "^3.0.0",
     "zod": "^3.24.2",
     "zod-validation-error": "^3.4.0"
   },

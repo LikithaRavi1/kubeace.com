@@ -34,20 +34,26 @@ const SolutionsPage: React.FC = () => {
             {
               "@type": "ListItem",
               "position": 1,
-              "name": "Kubernetes Cost Optimization",
-              "url": "https://kubeace.com/solutions/kubernetes-cost-optimization"
+              "name": "Cloud-Native Transformation",
+              "url": "https://kubeace.com/solutions/cloud-native-transformation"
             },
             {
               "@type": "ListItem",
               "position": 2,
-              "name": "WebRTC Consulting",
-              "url": "https://kubeace.com/solutions/webrtc-consulting"
+              "name": "Kubernetes Security Suite",
+              "url": "https://kubeace.com/solutions/kubernetes-security-suite"
             },
             {
               "@type": "ListItem",
               "position": 3,
               "name": "Video Conferencing Agents & AI Integration",
               "url": "https://kubeace.com/solutions/video-conferencing-agents-ai-integration"
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "name": "WebRTC Consulting & Development",
+              "url": "https://kubeace.com/solutions/webrtc-consulting-development"
             }
           ]
         }}

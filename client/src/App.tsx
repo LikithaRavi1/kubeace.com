@@ -4,7 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Custom404 from "@/pages/custom-404";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/header"; // Changed from Header to header
 import Footer from "@/components/layout/Footer";
 import Home from "@/pages/Home";
 import Services from "@/pages/Services";
@@ -19,6 +19,9 @@ import CaseStudy from "@/pages/CaseStudy";
 import WhitePapers from "@/pages/WhitePapers";
 import WhitePaperDetail from "@/pages/WhitePaperDetail";
 import ScrollToTop from '@/components/utils/ScrollToTop';
+import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
+import { RybbitAnalytics } from '@/components/analytics/RybbitAnalytics';
+import ChatBot from '@/components/chat/ChatBot';
 
 function Router() {
   return (
@@ -49,11 +52,14 @@ function Router() {
 const App = () => {
   return (
     <>
+      <GoogleAnalytics />
+      <RybbitAnalytics />
       <ScrollToTop />
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
           <Router />
+          <ChatBot />
         </TooltipProvider>
       </QueryClientProvider>
     </>

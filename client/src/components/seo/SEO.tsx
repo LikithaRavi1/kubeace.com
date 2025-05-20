@@ -35,7 +35,7 @@ const SEO: React.FC<SEOProps> = ({
   noindex = false,
   schema,
   breadcrumbs,
-  keywords,
+  keywords = "Kubernetes, Cloud Infrastructure, Security, DevOps, Optimization, Management, Cloud Native, Containerization",
   pageType = 'website',
   datePublished,
   dateModified,
@@ -44,7 +44,9 @@ const SEO: React.FC<SEOProps> = ({
 }) => {
   // Ensure the title ends with the site name and doesn't exceed 60 characters
   const siteTitle = "KubeAce";
-  let fullTitle = title.includes(siteTitle) ? title : `${title} | ${siteTitle}`;
+  // Modify title handling to prevent multiple H1 issues
+  const pageTitle = title.includes(siteTitle) ? title : `${title} | ${siteTitle}`;
+  let fullTitle = pageTitle;
   if (fullTitle.length > 60) {
     fullTitle = fullTitle.substring(0, 57) + '...';
   }
@@ -109,7 +111,8 @@ const SEO: React.FC<SEOProps> = ({
       '@type': 'WebPage',
       '@id': canonicalPath ? `${baseUrl}${canonicalPath}#webpage` : `${baseUrl}/#webpage`,
       url: canonicalPath ? `${baseUrl}${canonicalPath}` : baseUrl,
-      name: fullTitle,
+      name: pageTitle, // Use consistent title
+      headline: pageTitle, // Add headline for better SEO
       description: optimizedDescription,
       isPartOf: {
         '@id': `${baseUrl}/#website`
@@ -221,6 +224,18 @@ const SEO: React.FC<SEOProps> = ({
         <title>{fullTitle}</title>
         <meta name="description" content={optimizedDescription} />
         
+        {/* Add main heading for SEO */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "mainContentOfPage": {
+              "@type": "WebPageElement",
+              "headline": pageTitle
+            }
+          })}
+        </script>
+        
         {/* Add keywords if provided */}
         {keywords && <meta name="keywords" content={keywords} />}
         
@@ -235,7 +250,9 @@ const SEO: React.FC<SEOProps> = ({
         <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <meta name="theme-color" content="#0f4f95" />
         
-        {/* Misc meta tags */}
+        {/* Remove canonical tag from here since it's handled by Canonicals component */}
+        
+        {/* Rest of your meta tags */}
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="language" content="English" />
