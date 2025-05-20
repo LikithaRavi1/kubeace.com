@@ -23,22 +23,24 @@ export const services: Service[] = [
   {
     id: 2,
     title: 'LiveKit Consulting & Implementation',
-    description: 'Complete LiveKit consulting and deployment services, from architecture design to production deployment and maintenance.',
+    description: 'Complete LiveKit consulting and deployment services, from architecture design to production deployment, scaling, security, and maintenance.',
     icon: 'video',
     slug: 'livekit-consulting',
     content: `
       <h2>End-to-End LiveKit Solutions</h2>
-      <p>Comprehensive LiveKit services including:</p>
+      <p>We provide expert consulting and hands-on implementation services for LiveKit — a powerful open-source platform for building real-time audio and video experiences. Whether you're building a telehealth platform, live events app, or collaborative workspace, we ensure a reliable and scalable LiveKit setup tailored to your use case.</p>
+      <p>Our comprehensive LiveKit services include:</p>
       <ul>
-        <li>Architecture planning</li>
-        <li>Server deployment and configuration</li>
-        <li>Security implementation</li>
-        <li>Scaling strategy</li>
-        <li>Performance optimization</li>
-        <li>Ongoing maintenance</li>
+        <li><strong>Architecture Planning:</strong> Design and advise on the optimal architecture for real-time communications, including SFU/ingress/egress deployment, NAT traversal, and cloud compatibility (AWS, GCP, Azure).</li>
+        <li><strong>Server Deployment & Configuration:</strong> Deploy LiveKit servers (on-premise or cloud), configure TURN/STUN, ingress, recording pipelines, and secure infrastructure with TLS and OAuth tokens.</li>
+        <li><strong>Security Implementation:</strong> Implement JWT-based authentication, secure WebSocket signaling, media encryption, IP whitelisting, and audit logging for compliance and data safety.</li>
+        <li><strong>Scaling Strategy:</strong> Enable horizontal scaling with Kubernetes, autoscaling with Karpenter or custom controllers, and load balancing strategies for large-scale deployments.</li>
+        <li><strong>Performance Optimization:</strong> Monitor and fine-tune server CPU/memory utilization, improve latency, and ensure optimal media routing for global performance.</li>
+        <li><strong>Ongoing Maintenance & Support:</strong> CI/CD automation, version upgrades, 24/7 monitoring, incident response, and performance audits to keep your real-time experience reliable.</li>
       </ul>
+      <p>We can also integrate LiveKit with third-party platforms such as Twilio, SIP gateways, and custom React or mobile SDK frontends. Whether you're starting fresh or scaling an existing solution, we help you make the most of LiveKit.</p>
     `
-  },
+  },  
   {
     id: 13,
     title: 'Kubernetes Managed Services',
