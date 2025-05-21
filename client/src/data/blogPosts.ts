@@ -1661,5 +1661,348 @@ az extension update --name aks-preview</code></pre>
      slug: 'jitsi-with-jwt-authentication',
      tags: ['Jitsi Meet', 'Security', 'JWT Authentication']
    },
+   {
+    id: 9,
+    title: 'livekit-deployment-on-vm',
+    description: 'Step-by-step guide to install and deploy LiveKit on a virtual machine with TURN server, firewall rules, domain configuration, SSL setup, and debugging tips.',
+    image: 'https://plus.unsplash.com/premium_photo-1682129700163-840d28b593c5?q=80&w=3485&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    date: '2025-05-20',
+    author: 'KubeAce',
+    content: `
+      <h2>Introduction</h2>
+      <p>
+        LiveKit provides a scalable, open-source WebRTC stack for building real-time audio/video applications. This guide walks you through setting up a production-ready LiveKit installation on any cloud-agnostic virtual machine. Whether you're on AWS, Azure, GCP, or bare-metal, this tutorial applies universally.
+      </p>
+  
+      <h2>1. Prerequisites</h2>
+      <ul>
+        <li>A Linux VM (Ubuntu 22.04 recommended)</li>
+        <li>Root/sudo access</li>
+        <li>DNS and domain name</li>
+      </ul>
+  
+      <h2>2. Firewall Configuration</h2>
+      <p>
+        Open the following ports to allow WebRTC and API traffic:
+      </p>
+      <ul>
+        <li><code>80</code> – HTTP (for Let's Encrypt challenge)</li>
+        <li><code>443</code> – HTTPS (API + TURN TLS)</li>
+        <li><code>5349</code> – TURN over TLS (recommended)</li>
+        <li><code>50000-60000/UDP</code> – Media traffic (configurable)</li>
+      </ul>
+      <pre><code>
+  sudo ufw allow 80,443,5349/tcp
+  sudo ufw allow 50000:60000/udp
+  sudo ufw enable
+      </code></pre>
+  
+      <h2>3. Domain Setup & SSL</h2>
+      <p>
+        Point a domain (e.g., <code>livekit.yourdomain.com</code>) to your VM’s public IP. Use Let's Encrypt for SSL:
+      </p>
+      <pre><code>
+  sudo apt install certbot
+  sudo certbot certonly --standalone -d livekit.yourdomain.com
+      </code></pre>
+      <p>This generates certificates in <code>/etc/letsencrypt/live/livekit.yourdomain.com/</code>.</p>
+  
+      <h2>4. TURN Server Deployment</h2>
+      <p>
+        TURN is required for NAT traversal. You can install Coturn:
+      </p>
+      <pre><code>
+  sudo apt install coturn
+  sudo nano /etc/turnserver.conf
+      </code></pre>
+      <p>Basic config:</p>
+      <pre><code>
+  listening-port=5349
+  tls-listening-port=5349
+  cert=/etc/letsencrypt/live/livekit.yourdomain.com/fullchain.pem
+  pkey=/etc/letsencrypt/live/livekit.yourdomain.com/privkey.pem
+  realm=livekit.yourdomain.com
+  user=test:password
+  lt-cred-mech
+  fingerprint
+  min-port=50000
+  max-port=60000
+      </code></pre>
+      <pre><code>
+  sudo systemctl enable coturn
+  sudo systemctl start coturn
+      </code></pre>
+  
+      <h2>5. LiveKit Installation</h2>
+      <p>
+        Download and install the LiveKit server:
+      </p>
+      <pre><code>
+  curl -L https://github.com/livekit/livekit/releases/latest/download/livekit-server-linux-amd64 \
+    -o livekit-server && chmod +x livekit-server
+      </code></pre>
+  
+      <h3>Configuration</h3>
+      <p>Create <code>livekit.yaml</code>:</p>
+      <pre><code>
+  port: 7880
+  rtc:
+    udp_port_range_start: 50000
+    udp_port_range_end: 60000
+    tcp_port: 7881
+    use_external_ip: true
+  
+  keys:
+    your_api_key: your_api_secret
+  
+  turn:
+    enabled: true
+    domain: livekit.yourdomain.com
+    tls_port: 5349
+    credential: password
+      </code></pre>
+  
+      <p>Run the server:</p>
+      <pre><code>
+  ./livekit-server --config livekit.yaml
+      </code></pre>
+  
+      <h2>6. Sample Management Commands</h2>
+      <p>
+        Once deployed, you can use the <code>lk</code> CLI to manage LiveKit.
+      </p>
+      <pre><code>
+  curl -sSL https://get.livekit.io/cli | bash
+  
+  lk room list --api-key your_api_key --api-secret your_api_secret --url https://livekit.yourdomain.com
+  
+  lk room delete myroom
+  lk egress list
+      </code></pre>
+  
+      <h2>7. Debugging and Logs</h2>
+      <ul>
+        <li>LiveKit server logs to stdout – run it via <code>tmux</code> or a service manager.</li>
+        <li>To view logs:</li>
+      </ul>
+      <pre><code>
+  journalctl -u livekit.service -f
+      </code></pre>
+      <p>
+        If using systemd, create a unit file <code>/etc/systemd/system/livekit.service</code>:
+      </p>
+      <pre><code>
+  [Unit]
+  Description=LiveKit Server
+  After=network.target
+  
+  [Service]
+  ExecStart=/usr/local/bin/livekit-server --config /etc/livekit.yaml
+  Restart=on-failure
+  
+  [Install]
+  WantedBy=multi-user.target
+      </code></pre>
+  
+      <h2>Conclusion</h2>
+      <p>
+        With this setup, you now have a robust, production-ready LiveKit server running on any cloud or bare-metal VM. You've configured SSL, TURN, firewall, and a management interface. LiveKit empowers developers to create low-latency, real-time communication platforms — fully under their control.
+      </p>
+  
+      <h3>KubeAce Support</h3>
+      <p>
+        At <strong>KubeAce</strong>, we help businesses build scalable video infrastructure using LiveKit, WebRTC, and Kubernetes. Need assistance setting up monitoring, autoscaling, or integrating LiveKit into your application? Reach out to us!
+      </p>
+      <p>
+        Contact us at <a href="mailto:info@kubeace.com">info@kubeace.com</a> or visit <a href="https://kubeace.com">kubeace.com</a>.
+      </p>
+    `,
+    slug: 'livekit-deployment-on-vm',
+    tags: ['LiveKit', 'WebRTC', 'Deployment', 'TURN', 'SSL', 'Cloud Agnostic', 'Media Infrastructure']
+  },
+  {
+    id: 10,
+    title: 'livekit-kubernetes-helm-deployment',
+    description: 'Comprehensive guide to deploying LiveKit on Kubernetes using the official Helm chart with TURN, ingress, domain and SSL configuration.',
+    image: 'https://media.istockphoto.com/id/1190454345/photo/board-meeting-in-conference-room.jpg?s=1024x1024&w=is&k=20&c=KWcKKHHq1ZFGUWUqnOli80AzfHX1c26MNMU5QG9Luxs=',
+    date: '2025-05-20',
+    author: 'KubeAce',
+    content: `
+      <h2>Introduction</h2>
+      <p>
+        Deploying LiveKit on Kubernetes provides a scalable and production-grade infrastructure for real-time audio/video communications. This tutorial walks through installing LiveKit using the official Helm chart on any cloud or bare-metal Kubernetes cluster, including TURN server setup, domain and SSL configuration, ingress, autoscaling, and monitoring basics.
+      </p>
+  
+      <h2>1. Prerequisites</h2>
+      <ul>
+        <li>A working Kubernetes cluster (k8s v1.24+ recommended)</li>
+        <li>kubectl and Helm installed</li>
+        <li>A domain name pointing to your cluster (via LoadBalancer or Ingress)</li>
+        <li>Cert-Manager for automatic SSL</li>
+      </ul>
+  
+      <h2>2. Install Cert-Manager (for SSL)</h2>
+      <pre><code>
+  kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
+      </code></pre>
+  
+      <h2>3. Clone the LiveKit Helm Chart</h2>
+      <pre><code>
+  git clone https://github.com/livekit/livekit-helm.git
+  cd livekit-helm
+      </code></pre>
+  
+      <h2>4. Set up Namespace</h2>
+      <pre><code>
+  kubectl create namespace livekit
+      </code></pre>
+  
+      <h2>5. Configure values.yaml</h2>
+      <p>Edit <code>values.yaml</code> with your production configuration. Key sections:</p>
+  
+      <h3>⚙️ App Configuration</h3>
+      <pre><code>
+  livekit:
+    config:
+      port: 7880
+      rtc:
+        use_external_ip: true
+        udp_port_range_start: 50000
+        udp_port_range_end: 60000
+        tcp_port: 7881
+      keys:
+        your_api_key: your_api_secret
+      turn:
+        enabled: true
+        tls_port: 5349
+        domain: livekit.yourdomain.com
+        credential: your_turn_password
+      redis:
+        address: redis://livekit-redis-master:6379
+      region: your-region
+      node_ip: ""
+      log_level: info
+      enable_metrics: true
+      enable_pprof: false
+      health_port: 7888
+      websocket_port: 7880
+      api_key_file: ""
+      api_key: your_api_key
+      api_secret: your_api_secret
+      </code></pre>
+  
+      <h3>🌐 Ingress Setup (Optional)</h3>
+      <p>Enable ingress to expose LiveKit securely with a domain:</p>
+      <pre><code>
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    hosts:
+      - host: livekit.yourdomain.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: livekit-tls
+        hosts:
+          - livekit.yourdomain.com
+      </code></pre>
+  
+      <h2>6. Deploy the Chart</h2>
+      <pre><code>
+  helm install livekit . -n livekit -f values.yaml
+      </code></pre>
+  
+      <h2>7. TURN Server Options</h2>
+      <p>The Helm chart supports bundling TURN via coturn. If you'd like a standalone TURN, deploy it separately and point LiveKit’s <code>turn</code> section to it.</p>
+  
+      <h2>8. Expose via LoadBalancer (if not using Ingress)</h2>
+      <p>
+        For non-ingress-based setups, you can expose the service with a LoadBalancer:
+      </p>
+      <pre><code>
+  kubectl edit svc livekit -n livekit
+  # Change service type to LoadBalancer
+      </code></pre>
+      <p>Update your DNS A record to point to the LoadBalancer's IP.</p>
+  
+      <h2>9. TLS with Let's Encrypt</h2>
+      <p>
+        Ensure your Cert-Manager is set up with an issuer. Example issuer:
+      </p>
+      <pre><code>
+  apiVersion: cert-manager.io/v1
+  kind: ClusterIssuer
+  metadata:
+    name: letsencrypt-prod
+  spec:
+    acme:
+      server: https://acme-v02.api.letsencrypt.org/directory
+      email: your@email.com
+      privateKeySecretRef:
+        name: letsencrypt-prod
+      solvers:
+        - http01:
+            ingress:
+              class: nginx
+      </code></pre>
+  
+      <h2>10. Autoscaling and Resource Management</h2>
+      <pre><code>
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
+  
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+      </code></pre>
+  
+      <h2>11. Monitoring (Optional)</h2>
+      <ul>
+        <li>Enable Prometheus metrics by setting <code>enable_metrics: true</code>.</li>
+        <li>Install a Prometheus/Grafana stack.</li>
+        <li>Scrape <code>/metrics</code> endpoint exposed by LiveKit pods.</li>
+      </ul>
+  
+      <h2>12. LiveKit CLI (for remote access)</h2>
+      <pre><code>
+  curl -sSL https://get.livekit.io/cli | bash
+  
+  lk room list --api-key your_api_key --api-secret your_api_secret --url https://livekit.yourdomain.com
+  
+  lk egress list
+      </code></pre>
+  
+      <h2>13. Cleanup</h2>
+      <pre><code>
+  helm uninstall livekit -n livekit
+  kubectl delete ns livekit
+      </code></pre>
+  
+      <h2>Conclusion</h2>
+      <p>
+        Deploying LiveKit using the official Helm chart gives you powerful, scalable infrastructure for real-time applications with minimal manual overhead. This setup supports autoscaling, TLS, TURN, and observability—production ready out of the box.
+      </p>
+  
+      <h3>KubeAce Can Help</h3>
+      <p>
+        KubeAce helps companies build high-performance WebRTC infrastructures with LiveKit, Kubernetes, and DevOps best practices. We provide full-stack support from installation to autoscaling, CI/CD, TURN hardening, observability, and HA deployment.
+      </p>
+      <p>
+        Contact us at <a href="mailto:info@kubeace.com">info@kubeace.com</a> or visit <a href="https://kubeace.com">kubeace.com</a>.
+      </p>
+    `,
+    slug: 'livekit-kubernetes-deployment',
+    tags: ['LiveKit', 'Kubernetes', 'Helm', 'TURN', 'SSL', 'WebRTC', 'Ingress', 'Production Deployment']
+  }
 ];
    

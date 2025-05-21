@@ -172,51 +172,75 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kubeace.com/blog/livekit-vs-agora-comparison-for-real-time-apps</loc>
-    <lastmod>2025-04-10</lastmod>
+    <loc>https://kubeace.com/blog/argocd-3.0-upgrade</loc>
+    <lastmod>2025-04-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kubeace.com/blog/top-5-devops-tools-for-startups-2025</loc>
-    <lastmod>2025-04-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kubeace.com/blog/kubernetes-cost-optimization-strategies</loc>
-    <lastmod>2025-03-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://kubeace.com/blog/implementing-livekit-for-healthcare-telehealth</loc>
-    <lastmod>2025-03-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://kubeace.com/blog/devops-consulting-roi-case-study</loc>
-    <lastmod>2025-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://kubeace.com/blog/upgrading-to-argo-cd-3-0</loc>
-    <lastmod>2025-03-02</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kubeace.com/blog/mastering-deployment-strategies-with-argo-rollouts</loc>
-    <lastmod>2025-02-25</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://kubeace.com/blog/best-practices-for-kubernetes-security</loc>
-    <lastmod>2025-02-15</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kubeace.com/blog/optimizing-kubernetes-resource-allocation</loc>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kubeace.com/blog/karpenter-deployment-on-aks-cluster-using-nap</loc>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kubeace.com/blog/future-of-gitops-and-kubernetes</loc>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kubeace.com/blog/implementing-service-mesh-in-production-kubernetes</loc>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kubeace.com/blog/multi-cluster-kubernetes-management-strategies</loc>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kubeace.com/blog/kubernetes-cost-optimization-real-world-strategies</loc>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kubeace.com/blog/jitsi-with-jwt-authentication</loc>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kubeace.com/blog/livekit-deployment-on-vm</loc>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kubeace.com/blog/livekit-kubernetes-deployment</loc>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
