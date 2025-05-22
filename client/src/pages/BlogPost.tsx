@@ -24,29 +24,27 @@ const BlogPostPage: React.FC = () => {
   
   // Process the blog content when it loads
   useEffect(() => {
-    if (post?.content) {
-      try {
-        let processedHtml = '';
-        
-        if (typeof post.content === 'string') {
-          // If the content is already HTML (starts with a tag)
-          if (post.content.trim().startsWith('<')) {
-            processedHtml = post.content;
-          } else {
-            // Otherwise, treat as markdown
-            processedHtml = String(marked.parse(post.content));
-          }
+    if (post?.markdownContent && post.markdownContent.trim() !== '') {
+      // Process Markdown
+      const htmlFromMarkdown = String(marked.parse(post.markdownContent));
+      setProcessedContent(DOMPurify.sanitize(htmlFromMarkdown));
+    } else if (post?.content) {
+      // Process HTML (or fallback if markdownContent was empty)
+      // Check if content is already HTML (e.g., starts with '<') or needs parsing (original logic)
+      let processedHtml = '';
+      if (typeof post.content === 'string') {
+        if (post.content.trim().startsWith('<')) {
+          processedHtml = post.content; // Already HTML
+        } else {
+          // This case implies non-HTML, non-markdown main content, treat as markdown
+          processedHtml = String(marked.parse(post.content)); 
         }
-        
-        // Sanitize the HTML before setting it
-        setProcessedContent(DOMPurify.sanitize(processedHtml));
-      } catch (err) {
-        console.error('Error processing blog content:', err);
-        // Fallback to raw content in case of error
-        setProcessedContent(String(post.content));
       }
+      setProcessedContent(DOMPurify.sanitize(processedHtml));
+    } else {
+      setProcessedContent(''); // No content
     }
-  }, [post?.content]);
+  }, [post?.content, post?.markdownContent]);
 
   if (isLoading) {
     return (

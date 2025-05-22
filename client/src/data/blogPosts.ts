@@ -855,112 +855,139 @@ spec:
     image: '/images/karpenter.png',
     date: '2024-03-22',
     author: 'KubeAce',
-    content: `
-      <h2>Introduction</h2>
-      <p>
-        I've been working with Kubernetes clusters for years, and one challenge that consistently comes up is efficient resource management. After numerous production deployments, I've found that Azure Kubernetes Service (AKS) with <strong>Node Auto-Provisioning (NAP)</strong> powered by <strong>Karpenter</strong> offers an excellent solution for this problem. In this guide, I'll share my hands-on experience deploying Karpenter on an AKS cluster using NAP, including some tricky issues I encountered with custom VNets and how I resolved them.
-      </p>
-      
-      <h2>What is Node Auto-Provisioning (NAP)?</h2>
-      <p>
-        When I first heard about <strong>Node Auto-Provisioning (NAP)</strong>, I was skeptical about its effectiveness. After implementing it in several production environments, I can confidently say it's a game-changer. NAP is a feature in AKS that takes the headache out of node management by automatically creating and scaling nodes in your cluster. It works by leveraging <strong>Karpenter</strong> to watch for unschedulable pods and spin up nodes with the right resources to handle your workloads.
-      </p>
-      
-      <h2>Benefits of Using NAP with Karpenter</h2>
-      <p>
-        Through my implementations, I've observed three major benefits:
-      </p>
-      <ul>
-        <li><strong>Cost Optimization</strong>: I've seen up to 30% reduction in cloud costs as NAP automatically scales down during low-traffic periods and scales up only when needed.</li>
-        <li><strong>Improved Resource Utilization</strong>: Gone are the days of overprovisioning "just in case." NAP ensures resources are available precisely when needed.</li>
-        <li><strong>Simplified Management</strong>: My team spends significantly less time managing node pools manually, allowing us to focus on application development instead.</li>
-      </ul>
-      
-      <h2>Prerequisites</h2>
-      <p>
-        Before you dive in, make sure you have:
-      </p>
-      <ul>
-        <li>An active Azure subscription.</li>
-        <li>Azure CLI installed and configured.</li>
-        <li>A running AKS cluster.</li>
-      </ul>
-      
-      <h2>Enabling NAP on existing AKS</h2>
-      <p>
-        Here's my step-by-step process for enabling NAP on your AKS cluster:
-      </p>
-      
-      <h3>Step 1: Install the aks-preview CLI Extension</h3>
-      <pre><code>az extension add --name aks-preview
-az extension update --name aks-preview</code></pre>
-      
-      <h3>Step 2: Register the NodeAutoProvisioningPreview Feature Flag</h3>
-      <pre><code>az feature register --namespace Microsoft.ContainerService --name NodeAutoProvisioningPreview</code></pre>
-      <p>
-        I usually check the registration status to make sure it went through:
-      </p>
-      <pre><code>az feature show --namespace Microsoft.ContainerService --name NodeAutoProvisioningPreview</code></pre>
-      <p>
-        Once registered, don't forget to refresh the AKS provider:
-      </p>
-      <pre><code>az provider register --namespace Microsoft.ContainerService</code></pre>
-      
-      <h3>Step 3: Enable NAP on Your AKS Cluster</h3>
-      <p>
-        For a new cluster, I use:
-      </p>
-      <pre><code>az aks create --name &lt;ClusterName&gt; --resource-group &lt;ResourceGroupName&gt; --enable-node-auto-provisioning</code></pre>
-      <p>
-        For existing clusters, this works well:
-      </p>
-      <pre><code>az aks update --name &lt;ClusterName&gt; --resource-group &lt;ResourceGroupName&gt; --enable-node-auto-provisioning</code></pre>
-      
-      <h2>Deploying Karpenter</h2>
-      <p>
-        Now for the interesting part. Karpenter is what makes NAP work its magic. Here's how I deploy it:
-      </p>
-      
-      <h3>Step 1: Retrieve the Cluster Service Principal</h3>
-      <p>
-        This step tripped me up initially. If you're using a custom VNet (which most production setups do), you need to retrieve the cluster service principal:
-      </p>
-      <pre><code>az aks show --name &lt;ClusterName&gt; --resource-group &lt;ResourceGroupName&gt; --query identityProfile.kubeletidentity.clientId -o tsv</code></pre>
-      
-      <h3>Step 2: Grant Network Contributor Role</h3>
-      <p>
-        This was the key to solving my permission issues. You need to grant the <strong>Network Contributor</strong> role to the service principal:
-      </p>
-      <pre><code>az role assignment create --assignee &lt;ServicePrincipalID&gt; --role "Network Contributor" --scope /subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroupName&gt;</code></pre>
-      
-      <h2>Real-World Example</h2>
-      <p>
-        Let me share a recent project: We deployed an e-commerce platform that experiences unpredictable traffic spikes during flash sales. With NAP and Karpenter:
-      </p>
-      <ol>
-        <li>When a flash sale started, the system detected unschedulable pods within seconds.</li>
-        <li>New nodes were provisioned in under 2 minutes (much faster than the 5-10 minutes we experienced with traditional node pools).</li>
-        <li>After the sale ended, excess nodes were automatically scaled down, saving us approximately $2,000 in monthly cloud costs.</li>
-      </ol>
-      
-      <h2>Troubleshooting Tips from the Trenches</h2>
-      <p>
-        After several deployments, here are the issues I've encountered and how I solved them:
-      </p>
-      <ol>
-        <li><strong>Custom VNet Issues</strong>: The most common problem I faced was permission errors. Ensuring the service principal has the <strong>Network Contributor</strong> role fixed this every time.</li>
-        <li><strong>Pod Scheduling Delays</strong>: If you notice pods taking too long to schedule, check your Karpenter logs. In my case, I had to adjust the polling interval.</li>
-        <li><strong>Logs and Metrics</strong>: I always set up alerts based on Karpenter logs and metrics to catch scaling issues before they impact users.</li>
-      </ol>
-      
-      <h2>Conclusion</h2>
-      <p>
-        After implementing Karpenter with NAP across multiple AKS clusters, I'm convinced it's the way forward for dynamic workloads. It has streamlined our node management, optimized our costs, and improved our resource utilization significantly.
-      </p>
-      <p>
-        Whether you're handling unpredictable traffic patterns or just trying to optimize your cloud spend, I highly recommend giving Karpenter and NAP a try. The initial setup might take a bit of time, but the long-term benefits are well worth it.
-      </p>
-    `,
+    markdownContent: `---
+title: "Karpenter Deployment on AKS Cluster Using NAP"
+meta_title: "Deploying Karpenter with Node Auto-Provisioning (NAP) on Azure Kubernetes Service (AKS)"
+description: "Learn how to deploy Karpenter on an AKS cluster using Node Auto-Provisioning (NAP) for dynamic and efficient node scaling."
+date: 2024-03-22
+categories: ["Kubernetes"]
+author: "kubeace"
+tags: ["Karpenter", "AKS", "Node Auto-Provisioning", "NAP"]
+
+---
+
+## Introduction
+
+I've been working with Kubernetes clusters for years, and one challenge that consistently comes up is efficient resource management. After numerous production deployments, I've found that Azure Kubernetes Service (AKS) with **Node Auto-Provisioning (NAP)** powered by **Karpenter** offers an excellent solution for this problem. In this guide, I'll share my hands-on experience deploying Karpenter on an AKS cluster using NAP, including some tricky issues I encountered with custom VNets and how I resolved them.
+
+## What is Node Auto-Provisioning (NAP)?
+
+When I first heard about **Node Auto-Provisioning (NAP)**, I was skeptical about its effectiveness. After implementing it in several production environments, I can confidently say it's a game-changer. NAP is a feature in AKS that takes the headache out of node management by automatically creating and scaling nodes in your cluster. It works by leveraging **Karpenter** to watch for unschedulable pods and spin up nodes with the right resources to handle your workloads.
+
+## Benefits of Using NAP with Karpenter
+
+Through my implementations, I've observed three major benefits:
+
+1. **Cost Optimization**: I've seen up to 30% reduction in cloud costs as NAP automatically scales down during low-traffic periods and scales up only when needed.
+2. **Improved Resource Utilization**: Gone are the days of overprovisioning "just in case." NAP ensures resources are available precisely when needed.
+3. **Simplified Management**: My team spends significantly less time managing node pools manually, allowing us to focus on application development instead.
+
+## Prerequisites
+
+Before you dive in, make sure you have:
+- An active Azure subscription.
+- Azure CLI installed and configured.
+- A running AKS cluster.
+
+## Enabling NAP on existing AKS
+
+Here's my step-by-step process for enabling NAP on your AKS cluster:
+
+### Step 1: Install the \`aks-preview\` CLI Extension
+
+First, I always make sure to have the latest preview extensions:
+
+\`\`\`bash
+az extension add --name aks-preview
+az extension update --name aks-preview
+\`\`\`
+
+### Step 2: Register the \`NodeAutoProvisioningPreview\` Feature Flag
+
+Since NAP is still in preview (as of this writing), you'll need to register for it:
+
+\`\`\`bash
+az feature register --namespace Microsoft.ContainerService --name NodeAutoProvisioningPreview
+\`\`\`
+
+I usually check the registration status to make sure it went through:
+
+\`\`\`bash
+az feature show --namespace Microsoft.ContainerService --name NodeAutoProvisioningPreview
+\`\`\`
+
+Once registered, don't forget to refresh the AKS provider:
+
+\`\`\`bash
+az provider register --namespace Microsoft.ContainerService
+\`\`\`
+
+### Step 3: Enable NAP on Your AKS Cluster
+
+For a new cluster, I use:
+
+\`\`\`bash
+az aks create --name <ClusterName> --resource-group <ResourceGroupName> --enable-node-auto-provisioning
+\`\`\`
+
+For existing clusters, this works well:
+
+\`\`\`bash
+az aks update --name <ClusterName> --resource-group <ResourceGroupName> --enable-node-auto-provisioning
+\`\`\`
+
+## Deploying Karpenter
+
+Now for the interesting part. Karpenter is what makes NAP work its magic. Here's how I deploy it:
+
+### Step 1: Retrieve the Cluster Service Principal
+
+This step tripped me up initially. If you're using a custom VNet (which most production setups do), you need to retrieve the cluster service principal:
+
+\`\`\`bash
+az aks show --name <ClusterName> --resource-group <ResourceGroupName> --query identityProfile.kubeletidentity.clientId -o tsv
+\`\`\`
+
+### Step 2: Grant Network Contributor Role
+
+This was the key to solving my permission issues. You need to grant the **Network Contributor** role to the service principal:
+
+\`\`\`bash
+az role assignment create --assignee <ServicePrincipalID> --role "Network Contributor" --scope /subscriptions/<SubscriptionID>/resourceGroups/<ResourceGroupName>
+\`\`\`
+
+I discovered this solution after troubleshooting issues similar to those discussed in:
+- [Issue #199](https://github.com/Azure/karpenter-provider-azure/issues/199)
+- [Issue #269](https://github.com/Azure/karpenter-provider-azure/issues/269)
+
+## Real-World Example
+
+Let me share a recent project: We deployed an e-commerce platform that experiences unpredictable traffic spikes during flash sales. With NAP and Karpenter:
+
+1. When a flash sale started, the system detected unschedulable pods within seconds.
+2. New nodes were provisioned in under 2 minutes (much faster than the 5-10 minutes we experienced with traditional node pools).
+3. After the sale ended, excess nodes were automatically scaled down, saving us approximately $2,000 in monthly cloud costs.
+
+## Troubleshooting Tips from the Trenches
+
+After several deployments, here are the issues I've encountered and how I solved them:
+
+1. **Custom VNet Issues**: The most common problem I faced was permission errors. Ensuring the service principal has the **Network Contributor** role fixed this every time.
+2. **Pod Scheduling Delays**: If you notice pods taking too long to schedule, check your Karpenter logs. In my case, I had to adjust the polling interval.
+3. **Logs and Metrics**: I always set up alerts based on Karpenter logs and metrics to catch scaling issues before they impact users.
+
+## Conclusion
+
+After implementing Karpenter with NAP across multiple AKS clusters, I'm convinced it's the way forward for dynamic workloads. It has streamlined our node management, optimized our costs, and improved our resource utilization significantly.
+
+Whether you're handling unpredictable traffic patterns or just trying to optimize your cloud spend, I highly recommend giving Karpenter and NAP a try. The initial setup might take a bit of time, but the long-term benefits are well worth it.
+
+### KubeAce Support
+
+At KubeAce, we've helped dozens of organizations implement and optimize Kubernetes solutions on Azure. From initial setup to advanced configurations, our team is here to support your journey. Reach out to us for expert guidance and seamless deployments.
+
+Happy scaling!
+`,
     slug: 'karpenter-deployment-on-aks-cluster-using-nap',
     tags: ['Karpenter', 'AKS', 'Node Auto-Provisioning', 'NAP', 'Kubernetes']
   },
