@@ -4,7 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Custom404 from "@/pages/custom-404";
-import Header from "@/components/layout/header"; // Changed from Header to header
+import Header from "@/components/layout/Header"; // Corrected import path
 import Footer from "@/components/layout/Footer";
 import Home from "@/pages/Home";
 import Services from "@/pages/Services";
