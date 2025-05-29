@@ -83,7 +83,6 @@ export const blogPosts = pgTable("blogPosts", {
   date: timestamp("date").notNull(), // Accepts Date objects or ISO strings
   author: text("author").notNull(),
   content: text("content").notNull(),
-  markdownContent: text("markdownContent"),
   slug: text("slug").notNull().unique(),
   tags: text("tags").array().notNull(),
 });
@@ -97,7 +96,6 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).pick({
   content: true,
   slug: true,
   tags: true,
-  markdownContent: true,
 });
 
 // Testimonials schema

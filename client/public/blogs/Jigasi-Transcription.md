@@ -1,0 +1,145 @@
+---
+title: "Jitsi Live Caption Using Jigasi"
+meta_title: ""
+description: "this is meta description"
+date: 2024-01-12T05:00:00Z
+image: "https://images.unsplash.com/photo-1573497161249-42447f9f6706"
+categories: ["Jigasi", "Jitsi"]
+author: "Kubeace"
+tags: ["Jigasi", "Jitsi", "Transcription", "KubeAce"]
+draft: false
+slug: "Jigasi-Transcription"
+---
+
+## Introduction to Jitsi Meet:
+
+Jitsi Meet, an open-source video conferencing gem, revolutionizes virtual collaboration with its user-friendly interface and hassle-free access—no downloads required. Renowned for high-quality video and audio, it ensures secure, private meetings through end-to-end encryption. With seamless screen sharing and customization options, Jitsi Meet adapts effortlessly to diverse needs. In this blog, we delve into the innovative integration of Jigasi for live captions, unlocking an inclusive and dynamic dimension to your Jitsi Meet experience.
+
+## Overview of Jigasi:
+
+Jigasi, short for "Jitsi Gateway to SIP," is a crucial component within the Jitsi Meet ecosystem. It serves as a SIP gateway, seamlessly bridging the Jitsi Meet video conferencing platform with SIP-based systems. Jigasi acts as the intermediary that facilitates communication between Jitsi Meet and traditional SIP infrastructure, enabling enhanced functionality and interoperability.
+
+In practical terms, Jigasi allows users of Jitsi Meet to connect with participants on SIP-enabled devices or networks, expanding the reach and compatibility of the platform. This is particularly valuable for organizations that rely on SIP for their communication infrastructure, as Jigasi ensures a smooth integration between different communication protocols.
+
+The versatility of Jigasi extends beyond basic SIP integration. It can also be employed for advanced features, such as enabling live transcription services during Jitsi Meet conferences. This flexibility makes Jigasi a powerful tool for organizations seeking to enhance their communication capabilities while maintaining compatibility with existing systems.
+
+## Installation and Configuration of Jigasi:
+
+### 1. Using Jigasi to Transcribe a Jitsi Meet Conference:
+ 
+It is possible to use Jigasi as a provider of nearly real-time transcription as well as translation while a conference is ongoing, as well as serving a complete transcription after the conference is over. This can be done by using the SIP dial button and using the URI `jitsi_meet_transcribe`. Currently, Jigasi can send speech-to-text results to the chat of a Jitsi Meet room as either plain text or JSON. If it's sent in JSON, Jitsi Meet will provide subtitles in the left corner of the video, while plain text will just be posted in the chat. Jigasi will also provide a link to where the final, complete transcript will be served when it enters the room.
+
+### 2. Install Jigasi:
+
+```shell
+sudo apt install jigasi
+```
+
+> During the installation, you will be asked to enter your SIP account and password. This account will be used to invite other SIP participants. We don't require a SIP account for using Jigasi for live transcription.
+
+### 3. Configuring Google Credentials:
+
+#### Google Configuration:
+
+For Jigasi to act as a transcriber, it sends the audio of all participants in the room to an external speech-to-text service. To use [Google Cloud Speech-to-Text API](https://cloud.google.com/speech/), it is required to install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/) on the machine running Jigasi. To install on a regular Debian/Ubuntu environment:
+
+```shell
+export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+sudo apt-get update && sudo apt-get install google-cloud-sdk google-cloud-sdk-app-engine-java
+gcloud init
+gcloud auth application-default login
+```
+
+#### Configure Jigasi:
+
+This is done in the `/etc/jitsi/jigasi/sip-communicator.properties` file. Uncomment and edit the following lines:
+
+```properties
+# Options regarding Transcription. Read the README for a detailed description
+# about each property
+
+org.jitsi.jigasi.ENABLE_TRANSCRIPTION=true
+
+...
+
+# Delivering final transcript
+org.jitsi.jigasi.transcription.DIRECTORY=/var/lib/jigasi/transcripts
+org.jitsi.jigasi.transcription.BASE_URL=http://localhost/
+org.jitsi.jigasi.transcription.jetty.port=-1
+org.jitsi.jigasi.transcription.ADVERTISE_URL=false
+
+# Save formats
+org.jitsi.jigasi.transcription.SAVE_JSON=false
+org.jitsi.jigasi.transcription.SAVE_TXT=true
+
+# Send formats, if SEND_JSON is set to true, the caption will be shown as subtitles in the conference, and if SEND_TXT is set to true, the caption will be sent in CHAT
+org.jitsi.jigasi.transcription.SEND_JSON=true
+org.jitsi.jigasi.transcription.SEND_TXT=false
+
+# "video" model when doing transcription (Better result)
+org.jitsi.jigasi.transcription.USE_VIDEO_MODEL=true
+```
+
+### 5. Configure Jitsi Meet:
+
+Its configuration file name will vary depending on the hostname you configured during the Jitsi Meet installation. My file is located at `/etc/jitsi/meet/meet.kubeace.com-config.js`. You'll want
+
+ to edit the following section of the configuration file:
+
+```json
+// Transcription options.
+transcription: {
+    // Whether the feature should be enabled or not.
+    enabled: true,
+
+    // If true, the transcriber will use the application language.
+    // The application language is either explicitly set by participants in their settings or automatically
+    // detected based on the environment. For example, if the app is opened in a Chrome instance which
+    // is using French as its default language, then transcriptions for that participant will be in French.
+    // Defaults to true.
+    useAppLanguage: true,
+
+    // Transcriber language. This setting will only work if "useAppLanguage"
+    // is explicitly set to false.
+    preferredLanguage: 'en-US',
+
+    // Disable start transcription for all participants.
+    disableStartForAll: false,
+
+    // Enables automatic turning on captions when recording is started
+    autoCaptionOnRecord: false,
+},
+```
+
+### 6. Restart All Jitsi Meet Services:
+
+```shell
+sudo systemctl restart jitsi-videobridge2.service
+sudo systemctl restart jicofo.service
+sudo systemctl restart jigasi.service
+sudo systemctl restart prosody.service
+```
+
+#### Using Transcription:
+
+Once you have completed those steps, you should see a new option in the Jitsi Meet UI. To see and use it:
+
+1. Start a meeting:
+
+   ![Start Meeting](/images/Blog-1-jitsi-start-meeting.png)
+
+2. Click the following for close captions on the screen:
+
+   ![Enable CC](/images/Blog-1-Jigasi-Subtitles.png)
+
+3. Start speaking, and transcription will be subtitled on UI:
+
+   ![CC](/images/Blog-1-Jigas-Transcripted-UI.png)
+
+
+### Customization Services by KubeAce:
+
+Looking to further enhance your Jitsi Meet experience with customizations or integrations? KubeAce offers professional services tailored to your organization's needs. Whether you require specialized configurations for live transcription using Jigasi or integration with other transcription services like Google Cloud Speech-to-Text API, our team can assist you every step of the way. With KubeAce's expertise, you can unlock the full potential of Jitsi Meet for your unique requirements. [Contact us](https://www.kubeace.com/) today to learn more.
+

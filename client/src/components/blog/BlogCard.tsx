@@ -21,6 +21,7 @@ interface BlogPost {
 
 interface BlogCardProps {
   post: BlogPost;
+  content: string,
 }
 
 // Helper function to extract plain text from HTML content
@@ -41,9 +42,8 @@ const formatDate = (dateString: string): string => {
   return format(new Date(dateString), 'MMMM d, yyyy');
 };
 
-const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
-  const summary = extractPlainText(post.content || '', 180);
-  
+const BlogCard: React.FC<BlogCardProps> = ({ content, post }) => {
+  const summary = extractPlainText(content || post.content || '', 180);
   return (
     <div className="flex flex-col bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden h-full">
       {post.image && (
