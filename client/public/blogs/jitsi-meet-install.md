@@ -1,0 +1,91 @@
+---
+title: "Jitsi meet installation on Ubuntu 22.04"
+meta_title: "Jitsi Meet Self-Hosting Guide for Ubuntu 22.04"
+description: "Learn how to install and configure Jitsi Meet on Ubuntu 22.04, enabling seamless video conferencing for your organization."
+date: 2024-03-22
+categories: ["Jitsi"]
+author: "kubeace"
+tags: ["Jitsi Meet", "Self-Hosting"]
+slug: "jitsi-meet-install"
+image: "/images/jitsi-meet-installation-22.04.webp"
+---
+
+## Introduction
+
+In the landscape of virtual meetings and remote collaboration, Jitsi Meet stands out as a versatile and user-friendly solution. However, setting it up on your own server might seem daunting at first. Fear not! In this guide, we'll walk you through the process of installing and configuring Jitsi Meet on Ubuntu 22.04, empowering you to host your own secure and reliable video conferencing platform.
+
+### Preparing Your Environment
+
+Before diving into the installation process, it's crucial to ensure that your Ubuntu 22.04 server is up-to-date and equipped with the necessary packages. Here's what you'll need:
+
+- **gnupg2**
+- **nginx-full**
+- **sudo** (if not already installed)
+- **curl** (or **wget**)
+- **OpenJDK 11**
+
+### Installation Steps
+
+#### 1. Update Packages and Repositories
+
+Ensure your system is up-to-date and supports HTTPS for repository access:
+
+```bash
+sudo apt update
+sudo apt install apt-transport-https
+sudo apt-add-repository universe
+sudo apt update
+```
+
+#### 2. Set Up DNS for Your Server
+
+Decide on a domain for your Jitsi Meet instance and configure a DNS A record accordingly in your DNS provider 
+
+#### 3. Configure Fully Qualified Domain Name (FQDN) (Optional)
+
+If you have an FQDN set up, configure it using the following commands:
+
+```bash
+sudo hostnamectl set-hostname meet.kubeace.com
+sudo nano /etc/hosts
+```
+
+Add the following line:
+
+```
+x.x.x.x meet.kubeace.com
+```
+
+#### 4. Add the Prosody and Jitsi Package Repositories
+
+
+```bash
+sudo curl -sL https://prosody.im/files/prosody-debian-packages.key -o /etc/apt/keyrings/prosody-debian-packages.key
+echo "deb [signed-by=/etc/apt/keyrings/prosody-debian-packages.key] http://packages.prosody.im/debian $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/prosody-debian-packages.list
+sudo apt install lua5.2
+
+curl -sL https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > /usr/share/keyrings/jitsi-keyring.gpg'
+echo "deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/" | sudo tee /etc/apt/sources.list.d/jitsi-stable.list
+```
+
+#### 5. Install Jitsi Meet
+
+```bash
+sudo apt update
+sudo apt install jitsi-meet -y
+```
+
+#### 6. Configure Firewall
+
+Open the necessary ports in your firewall to allow traffic to the Jitsi Meet server:
+
+- **80 TCP**
+- **443 TCP**
+- **10000 UDP**
+- **22 TCP**
+- **3478 UDP**
+- **5349 TCP**
+
+### Conclusion
+
+Excellent job! You've effectively configured Jitsi Meet on your Ubuntu 22.04 server. Whether you're facilitating small team gatherings or orchestrating large-scale conferences, Jitsi Meet provides a versatile and dependable platform to unite people regardless of their location. Moreover, with the assistance and adaptability options offered by providers such as `KubeAce`, you have the opportunity to customize your Jitsi Meet deployment according to your organization's distinct requirements

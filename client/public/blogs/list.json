@@ -1,0 +1,18 @@
+[
+    "Jigasi-Transcription.md",
+    "Jitsi-Architecture.md",
+    "karpenter-deployment-on-aks-cluster-using-nap.md",
+    "mastering-deployment-strategies-with-argo-rollouts.md",
+    "argocd-3.0-upgrade.md",
+    "jitsi-meet-install.md",
+    "jitsi-with-jwt-authentication.md",
+    "external-secrets-azure-key-vault-workload-identity.md",
+    "optimizing-kubernetes-resource-allocation.md",
+    "kubernetes-upgrade-1.30.md",
+    "kubernetes-upgrades-for-minimal-downtime.md",
+    "nginx-ingress-certmanager.md",
+    "best-practices-for-kubernetes-security.md",
+    "livekit-deployment-on-vm.md",
+    "livekit-deployment-on-kubernetes.md",
+    "optimizing-gpu-utlilzation-on-gke.md"
+]
