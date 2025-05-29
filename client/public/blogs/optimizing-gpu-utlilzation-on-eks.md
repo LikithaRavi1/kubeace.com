@@ -8,7 +8,7 @@ categories: ["AWS", "EKS", "GPU", "AI/ML"]
 author: "Kubeace"
 tags: ["AWS", "EKS", "GPU", "AI/ML", "Kubernetes", "MIG", "MPS", "Time-slicing"]
 draft: false
-slug: "optimizing-gpu-utlilzation-on-gke"
+slug: "optimizing-gpu-utlilzation-on-eks"
 ---
 
 # Optimizing GPU Utilization for AI/ML Workloads on AWS EKS
@@ -214,9 +214,9 @@ Whether you're just beginning to explore GPU sharing or you're optimizing large-
 
 ## KubeAce Support
 
-At **KubeAce**, we help organizations design, deploy, and optimize AI/ML infrastructure on Kubernetes—especially on **Google Kubernetes Engine (GKE)**. Our engineers bring deep expertise in GPU workload management, including:
+At **KubeAce**, we help organizations design, deploy, and optimize AI/ML infrastructure on Kubernetes—especially on **Elastic Kubernetes Engine (EKS)**. Our engineers bring deep expertise in GPU workload management, including:
 
-* Configuring MIG on NVIDIA A100s in GKE Autopilot or Standard clusters
+* Configuring MIG on NVIDIA A100s in EKS Autopilot or Standard clusters
 * Tuning MPS and time-slicing for cost-effective inference at scale
 * Integrating monitoring and observability with Prometheus, DCGM, and Grafana
 * Ensuring workloads auto-scale efficiently without waste
