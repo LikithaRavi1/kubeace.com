@@ -14,7 +14,7 @@ slug: "optimizing-gpu-utlilzation-on-eks"
 # Optimizing GPU Utilization for AI/ML Workloads on AWS EKS
 
 Modern AI/ML workloads on Kubernetes often underutilize GPUs when each pod gets an entire device. AWS EKS can leverage advanced sharing features to squeeze more work out of each GPU. NVIDIA provides several mechanisms – **Multi-Instance GPU (MIG)**, **CUDA Multi-Process Service (MPS)**, and **time-slicing** – that allow multiple pods or processes to share a GPU’s resources. Broadly:
-
+  
 * **MIG** partitions Ampere GPUs (e.g. A100/H100) into isolated mini-GPUs.
 * **MPS** runs kernels from different processes in parallel on the same GPU.
 * **Time-slicing** interleaves GPU execution among containers.

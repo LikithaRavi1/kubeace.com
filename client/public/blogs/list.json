@@ -14,5 +14,6 @@
     "best-practices-for-kubernetes-security.md",
     "livekit-deployment-on-vm.md",
     "livekit-deployment-on-kubernetes.md",
-    "optimizing-gpu-utlilzation-on-eks.md"
+    "optimizing-gpu-utlilzation-on-eks.md",
+    "apple-container-macos-guide.md"
 ]
