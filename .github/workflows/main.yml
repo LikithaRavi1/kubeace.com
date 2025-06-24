@@ -40,10 +40,15 @@ jobs:
           sed -i "s|tag: .*|tag: latest|" kubeace-app/values.yaml
 
       # Step 6: Commit and push updated Helm chart
-      - name: Commit updated Helm chart
+      - name: Commit Updated Helm Chart
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add kubeace-app/values.yaml
+
+          if ! git diff --cached --quiet; then
           git commit -m "Update image tag to latest"
           git push
+          else
+          echo "No changes to commit"
+          fi
+
