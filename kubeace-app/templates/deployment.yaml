@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "kubeace-app.fullname" . }}
+  namespace: {{ .Release.Namespace }}  
   labels:
     {{- include "kubeace-app.labels" . | nindent 4 }}
 spec:
