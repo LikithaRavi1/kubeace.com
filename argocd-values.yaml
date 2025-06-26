@@ -23,7 +23,7 @@ server:
 
     # -- Argo CD server hostname
     # @default -- `""` (defaults to global.domain)
-    hostname: argocd-app.kubeace.com
+    hostname: argocd-app1.kubeace.com
 
     # -- The path to Argo CD server
     path: /
