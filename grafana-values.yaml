@@ -17,7 +17,7 @@ grafana:
   pathType: Prefix
 
   hosts:
-    - grafana-app.kubeace.com
+    - grafana-app1.kubeace.com
   ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
   extraPaths: []
   # - path: /*
@@ -37,4 +37,4 @@ grafana:
   tls: 
     - secretName: grafana-tls
       hosts:
-        - grafana-app.kubeace.com
+        - grafana-app1.kubeace.com
